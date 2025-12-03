@@ -1,0 +1,36 @@
+version = 1
+revision = 3
+requires-python = ">=3.15"
+
+[[package]]
+name = "dts-102-practical"
+version = "1.0.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "peewee" },
+    { name = "peewee-enum-field" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "peewee", specifier = ">=3.18.3" },
+    { name = "peewee-enum-field", specifier = ">=0.2.0" },
+]
+
+[[package]]
+name = "peewee"
+version = "3.18.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/6f/60/58e7a307a24044e0e982b99042fcd5a58d0cd928d9c01829574d7553ee8d/peewee-3.18.3.tar.gz", hash = "sha256:62c3d93315b1a909360c4b43c3a573b47557a1ec7a4583a71286df2a28d4b72e", size = 3026296, upload-time = "2025-11-03T16:43:46.678Z" }
+
+[[package]]
+name = "peewee-enum-field"
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "peewee" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7e/dc/003bd673d0cd791925c28c6db310575a43a048a2cacfc4755e2582f993bc/peewee_enum_field-0.2.0.tar.gz", hash = "sha256:13b4e453cd35c3e0cf5df991340c4355d614056d2a1abc00f548a37a3bb62504", size = 3017, upload-time = "2024-09-15T10:56:22.869Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6c/02/00468507590d827a21e6f3209d72485f2110c1024adf3463c4ff41f64332/peewee_enum_field-0.2.0-py3-none-any.whl", hash = "sha256:28bb3aaeab9bbe639209ed8dd8673c60e04ece199eb8c6962205df6a3a28e24a", size = 3394, upload-time = "2024-09-15T10:56:21.341Z" },
+]
