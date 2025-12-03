@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import TYPE_CHECKING
 
 # Database ORM
 import peewee as PW
@@ -12,12 +13,23 @@ import uuid
 db = PW.SqliteDatabase("database/data.db", pragmas={ "foreign_keys": 1 })
 
 
-# Create a class to extend when creating the schema for db tables
+# === Define a class to extend when creating the schema for db tables ===
+
 class BaseModel(PW.Model):
   class Meta:
     # This tells each table class what database it's in
     database = db
     legacy_table_names = False
+
+
+# Peewee removes Meta at runtime, keep a stand-in for type checkers
+if TYPE_CHECKING:
+  BaseMeta = BaseModel.Meta
+else:
+  class BaseMeta:
+    pass
+
+# === Define a class to extend when creating the schema for db tables ===
 
 
 
@@ -97,7 +109,7 @@ class UserPermissions(BaseModel):
     on_delete="CASCADE",
   )
 
-  class Meta:
+  class Meta(BaseMeta):
     primary_key = PW.CompositeKey("user", "permission")
 
 
