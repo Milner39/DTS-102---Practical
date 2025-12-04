@@ -2,11 +2,9 @@ import enum as _ENUM
 import uuid as _UUID
 import typing as _TYPING
 
-# Database ORM
 import peewee as _PW
 import peewee_enum_field as _PWE
 
-import client as _DB_CLIENT
 
 
 _db = _PW.DatabaseProxy()
