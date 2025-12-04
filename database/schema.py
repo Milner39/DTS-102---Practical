@@ -133,7 +133,9 @@ class Booking(BaseModel):
     on_delete="CASCADE",
   )
 
-  datetime = _PW.DateTimeField()
+  datetime = _PW.DateTimeField(
+    null=False
+  )
 
 
 class Ticket(BaseModel):
