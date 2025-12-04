@@ -21,11 +21,11 @@ FILM_TITLES = [
 # We use `Model.get_or_create()` so we don't get an error if the data already exists
 
 # Admin User
-adminUser = dbClient.tables.User.get_or_create(
+adminUser, _ = dbClient.tables.User.get_or_create(
   username="admin",
   password="123"
 )
-adminPermission = dbClient.tables.Permission.get_or_create(
+adminPermission, _ = dbClient.tables.Permission.get_or_create(
   id=ENUM__Permission_level.ADMIN.value,
   readable=ENUM__Permission_level.ADMIN.name
 )
