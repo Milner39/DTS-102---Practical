@@ -7,14 +7,14 @@ import peewee_enum_field as _PWE
 
 
 
-_db = _PW.DatabaseProxy()
+_dbProxy = _PW.DatabaseProxy()
 
 # === Define a class to extend when creating the schema for db tables ===
 
 class BaseModel(_PW.Model):
   class Meta:
     # This tells each table class what database it's in
-    database = _db
+    database = _dbProxy
     legacy_table_names = False
 
 
@@ -175,13 +175,12 @@ class Tables:
   Booking = Booking
   Ticket = Ticket
 
-
 def createTables(database: _PW.Database):
-  _db.initialize(database)
+  _dbProxy.initialize(database)
 
-  _db.connect()
-
-  _db.create_tables([
+  dbInstance = database
+  dbInstance.connect()
+  dbInstance.create_tables([
     Tables.User,
     Tables.UserPermissions,
     Tables.Permission,
@@ -189,5 +188,4 @@ def createTables(database: _PW.Database):
     Tables.Booking,
     Tables.Ticket
   ])
-
-  _db.close()
+  dbInstance.close()
