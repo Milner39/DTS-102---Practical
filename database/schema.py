@@ -8,6 +8,7 @@ import peewee as _PW
 
 _dbProxy = _PW.DatabaseProxy()
 
+
 # === Define a class to extend when creating the schema for db tables ===
 
 class BaseModel(_PW.Model):
@@ -24,7 +25,7 @@ else:
   class BaseMeta:
     pass
 
-# === Define a class to extend when creating the schema for db tables ===
+# === ===
 
 
 
@@ -38,7 +39,7 @@ pk_uuid = lambda : _PW.UUIDField(
   null=False,
 )
 
-# === Define some reusable field types ===
+# === ===
 
 
 
@@ -54,7 +55,7 @@ class TicketHolderTypes(_ENUM.Enum):
   CHILD = 2
   STUDENT = 3
 
-# === Define some enums for enum fields ===
+# === ===
 
 
 
@@ -183,7 +184,7 @@ class Ticket(BaseModel):
     null=False
   )
 
-# === Define the table schemas ===
+# === ===
 
 
 
