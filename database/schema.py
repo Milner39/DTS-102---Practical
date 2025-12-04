@@ -3,7 +3,6 @@ import uuid as _UUID
 import typing as _TYPING
 
 import peewee as _PW
-import peewee_enum_field as _PWE
 
 
 
@@ -79,17 +78,22 @@ class User(BaseModel):
 
   contactPhone = _PW.CharField(
     max_length=32,
-    null=True
+    null=True,
   )
 
 
 # Used to show different users special options
 class Permission(BaseModel):
-  level = _PWE.EnumField(ENUM__Permission_level,
+  id = _PW.SmallIntegerField(
     primary_key=True,
-    max_length=32,
     unique=True,
     null=False,
+  )
+
+  readable = _PW.CharField(
+    max_length=32,
+    unique=True,
+    null=True,
   )
 
 
@@ -139,6 +143,20 @@ class Booking(BaseModel):
   )
 
 
+class TicketHolderType(BaseModel):
+  id = _PW.SmallIntegerField(
+    primary_key=True,
+    unique=True,
+    null=False,
+  )
+
+  readable = _PW.CharField(
+    max_length=32,
+    unique=True,
+    null=True,
+  )
+
+
 class Ticket(BaseModel):
   id = pk_uuid()
 
@@ -153,9 +171,8 @@ class Ticket(BaseModel):
     max_length=64
   )
 
-  holderType = _PWE.EnumField(ENUM__Ticket_holderType,
-    max_length=32,
-    null=False,
+  holderType = _PW.ForeignKeyField(TicketHolderType,
+    backref="tickets",
   )
 
   # In case refunds are made

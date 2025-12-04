@@ -1,5 +1,4 @@
 import peewee as _PW
-import sqlite3 as _SQLITE3
 
 from client import DBClient
 from schema import ENUM__Permission_level, ENUM__Ticket_holderType
@@ -27,7 +26,8 @@ adminUser = dbClient.tables.User.get_or_create(
   password="123"
 )
 adminPermission = dbClient.tables.Permission.get_or_create(
-  level=ENUM__Permission_level.ADMIN
+  id=ENUM__Permission_level.ADMIN.value,
+  readable=ENUM__Permission_level.ADMIN.name
 )
 dbClient.tables.UserPermissions.get_or_create(
   user=adminUser,
