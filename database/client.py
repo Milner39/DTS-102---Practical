@@ -10,8 +10,8 @@ def createDatabase():
 
 
 class DBClient:
-  database = createDatabase()
-  tables = createTables(database)
-
   def __init__(self):
+    self.database = createDatabase()
     self.database.connect()
+
+    self.tables = createTables(self.database)
