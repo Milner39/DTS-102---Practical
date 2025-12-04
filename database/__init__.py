@@ -1,4 +1,1 @@
-from client import createClient
-from schema import createTables
-
-createTables(createClient())
+from client import DBClient
