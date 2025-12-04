@@ -7,6 +7,7 @@ dbClient = DBClient()
 
 
 
+# Return the user id of the entry in the User table that has the given username and password
 def user__idByAuth(username: str, password: str):
   User = dbClient.tables.User
 
@@ -29,13 +30,13 @@ def user__dataByAuth(username: str, password: str):
   userId = user__idByAuth(username, password)
   if userId == None: return None
 
-  query = (User
+  res = (User
     .select(User.id, User.username, User.contactPhone)
     .where(User.id == userId)
     .prefetch(UserPermissions, Permission, Booking)
   )
-  user = next(iter(query), None)
-  if user is None: return None
+  if len(res) != 1: raise Exception()
+  user = res[0]
 
   permissions = [
     up.permission.readable
