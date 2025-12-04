@@ -32,7 +32,7 @@ else:
 # === Define some reusable field types ===
 
 # Primary Key that generates a random UUID on creation
-pk_uuid = _PW.UUIDField(
+pk_uuid = lambda : _PW.UUIDField(
   primary_key=True,
   default=_UUID.uuid4,
   unique=True,
@@ -62,7 +62,7 @@ class ENUM__Ticket_holderType(_ENUM.Enum):
 # === Define the table schemas ===
 
 class User(BaseModel):
-  id = pk_uuid
+  id = pk_uuid()
 
   # Used to login so must be unique
   username = _PW.CharField(
@@ -79,6 +79,7 @@ class User(BaseModel):
 
   contactPhone = _PW.CharField(
     max_length=32,
+    null=True
   )
 
 
@@ -119,7 +120,7 @@ class Film(BaseModel):
 
 
 class Booking(BaseModel):
-  id = pk_uuid
+  id = pk_uuid()
 
   user = _PW.ForeignKeyField(User,
     backref="bookings",
@@ -139,7 +140,7 @@ class Booking(BaseModel):
 
 
 class Ticket(BaseModel):
-  id = pk_uuid
+  id = pk_uuid()
 
   booking = _PW.ForeignKeyField(Booking,
     backref="tickets",
