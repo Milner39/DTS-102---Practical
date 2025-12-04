@@ -170,6 +170,26 @@ class Ticket(BaseModel):
 # === Define the table schemas ===
 
 
+
+# === Create the tables ===
+
 db.connect()
 
-db.create_tables([User, Permission, UserPermissions, Film, Booking, Ticket])
+class Tables:
+  User = User
+  UserPermissions = UserPermissions
+  Permission = Permission
+  Film = Film
+  Booking = Booking
+  Ticket = Ticket
+
+db.create_tables([
+  Tables.User,
+  Tables.UserPermissions,
+  Tables.Permission,
+  Tables.Film,
+  Tables.Booking,
+  Tables.Ticket
+])
+
+# === Create the tables ===
