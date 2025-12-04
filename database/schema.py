@@ -44,11 +44,11 @@ pk_uuid = lambda : _PW.UUIDField(
 
 # === Define some enums for enum fields ===
 
-class ENUM__Permission_level(_ENUM.Enum):
+class PermissionLevels(_ENUM.Enum):
   ADMIN = 0
   DEVELOPER = 1
 
-class ENUM__Ticket_holderType(_ENUM.Enum):
+class TicketHolderTypes(_ENUM.Enum):
   ADULT = 0
   TEENAGER = 1
   CHILD = 2
@@ -200,6 +200,7 @@ def createTables(database: _PW.Database):
     Film = Film
     Booking = Booking
     Ticket = Ticket
+    TicketHolderType = TicketHolderType
 
   dbInstance = database
   dbInstance.create_tables([
@@ -208,7 +209,8 @@ def createTables(database: _PW.Database):
     Tables.Permission,
     Tables.Film,
     Tables.Booking,
-    Tables.Ticket
+    Tables.Ticket,
+    Tables.TicketHolderType
   ])
 
   return Tables

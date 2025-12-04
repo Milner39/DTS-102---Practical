@@ -1,7 +1,7 @@
 import peewee as _PW
 
 from client import DBClient
-from schema import ENUM__Permission_level, ENUM__Ticket_holderType
+from schema import PermissionLevels, TicketHolderTypes
 
 dbClient = DBClient()
 
@@ -25,24 +25,35 @@ FILM_TITLES = [
 # === Populate the database with data we know we'll need ===
 # We use `Model.get_or_create()` so we don't get an error if the data already exists
 
-# Admin User
-adminUser, _ = dbClient.tables.User.get_or_create(
-  username=ADMIN_USER["username"],
-  password=ADMIN_USER["password"]
-)
-adminPermission, _ = dbClient.tables.Permission.get_or_create(
-  id=ENUM__Permission_level.ADMIN.value,
-  readable=ENUM__Permission_level.ADMIN.name
-)
-dbClient.tables.UserPermissions.get_or_create(
-  user=adminUser,
-  permission=adminPermission
-)
-
 # Films from the Film Catalogue
 for filmTitle in FILM_TITLES:
   dbClient.tables.Film.get_or_create(
     title=filmTitle
   )
+
+# Permission levels
+for level in PermissionLevels:
+  dbClient.tables.Permission.get_or_create(
+    id=level.value,
+    readable=level.name
+  )
+
+# Ticket holder types
+for type in TicketHolderTypes:
+  dbClient.tables.TicketHolderType.get_or_create(
+    id=type.value,
+    readable=type.name
+  )
+
+# Admin User
+adminUser, _ = dbClient.tables.User.get_or_create(
+  username=ADMIN_USER["username"],
+  password=ADMIN_USER["password"]
+)
+adminPermission = dbClient.tables.Permission.get_by_id(PermissionLevels.ADMIN.value)
+dbClient.tables.UserPermissions.get_or_create(
+  user=adminUser,
+  permission=adminPermission
+)
 
 # === Populate the database with data we know we'll need ===
