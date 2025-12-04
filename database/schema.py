@@ -167,16 +167,19 @@ class Ticket(BaseModel):
 
 
 
-class Tables:
-  User = User
-  UserPermissions = UserPermissions
-  Permission = Permission
-  Film = Film
-  Booking = Booking
-  Ticket = Ticket
+def initializeProxy(database: _PW.Database):
+  _dbProxy.initialize(database)
 
 def createTables(database: _PW.Database):
-  _dbProxy.initialize(database)
+  initializeProxy(database)
+
+  class Tables:
+    User = User
+    UserPermissions = UserPermissions
+    Permission = Permission
+    Film = Film
+    Booking = Booking
+    Ticket = Ticket
 
   dbInstance = database
   dbInstance.connect()
@@ -189,3 +192,5 @@ def createTables(database: _PW.Database):
     Tables.Ticket
   ])
   dbInstance.close()
+
+  return Tables
