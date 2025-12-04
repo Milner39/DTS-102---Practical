@@ -6,6 +6,11 @@ from schema import ENUM__Permission_level, ENUM__Ticket_holderType
 dbClient = DBClient()
 
 
+ADMIN_USER = {
+  "username": "admin",
+  "password": "123"
+}
+
 FILM_TITLES = [
   "Jurassic Cabin",
   "The Dark Night",
@@ -22,8 +27,8 @@ FILM_TITLES = [
 
 # Admin User
 adminUser, _ = dbClient.tables.User.get_or_create(
-  username="admin",
-  password="123"
+  username=ADMIN_USER["username"],
+  password=ADMIN_USER["password"]
 )
 adminPermission, _ = dbClient.tables.Permission.get_or_create(
   id=ENUM__Permission_level.ADMIN.value,
