@@ -182,7 +182,6 @@ def createTables(database: _PW.Database):
     Ticket = Ticket
 
   dbInstance = database
-  dbInstance.connect()
   dbInstance.create_tables([
     Tables.User,
     Tables.UserPermissions,
@@ -191,6 +190,5 @@ def createTables(database: _PW.Database):
     Tables.Booking,
     Tables.Ticket
   ])
-  dbInstance.close()
 
   return Tables
