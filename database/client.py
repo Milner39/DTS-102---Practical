@@ -1,6 +1,6 @@
 import os
 import peewee as _PW
-from schema import createTables
+from .schema import createTables
 
 
 

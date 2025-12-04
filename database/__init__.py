@@ -1,6 +1,6 @@
 import peewee as _PW
 
-from client import DBClient
+from .client import DBClient
 
 
 dbClient = DBClient()
@@ -52,6 +52,3 @@ def user__dataByAuth(username: str, password: str):
     "permissions": permissions,
     "bookings": bookings,
   }
-
-
-print(user__dataByAuth("admin", "123"))

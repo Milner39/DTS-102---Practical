@@ -1,7 +1,7 @@
 import peewee as _PW
 
-from client import DBClient
-from schema import PermissionLevels, TicketHolderTypes
+from .client import DBClient
+from .schema import PermissionLevels, TicketHolderTypes
 
 dbClient = DBClient()
 
