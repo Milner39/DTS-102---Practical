@@ -93,7 +93,7 @@ class Permission(BaseModel):
   readable = _PW.CharField(
     max_length=32,
     unique=True,
-    null=True,
+    null=False,
   )
 
 
@@ -153,7 +153,7 @@ class TicketHolderType(BaseModel):
   readable = _PW.CharField(
     max_length=32,
     unique=True,
-    null=True,
+    null=False,
   )
 
 
