@@ -23,8 +23,8 @@ def user__idByAuth(username: str, password: str):
 
 def user__dataByAuth(username: str, password: str):
   User = dbClient.tables.User
-  UserPermissions = dbClient.tables.UserPermissions
-  Permission = dbClient.tables.Permission
+  UserPermissionGroups = dbClient.tables.UserPermissionGroups
+  PermissionGroup = dbClient.tables.PermissionGroup
   Booking = dbClient.tables.Booking
 
   userId = user__idByAuth(username, password)
@@ -33,14 +33,14 @@ def user__dataByAuth(username: str, password: str):
   res = (User
     .select(User.id, User.username, User.contactPhone)
     .where(User.id == userId)
-    .prefetch(UserPermissions, Permission, Booking)
+    .prefetch(UserPermissionGroups, PermissionGroup, Booking)
   )
   if len(res) != 1: raise Exception()
   user = res[0]
 
-  permissions = [
-    up.permission.readable
-    for up in user.permissions
+  permissionGroups = [
+    up.permissionGroup.readable
+    for up in user.permissionGroups
   ]
   bookings = [
     { "film": b.film_id, "datetime": b.datetime }
@@ -50,6 +50,6 @@ def user__dataByAuth(username: str, password: str):
   return {
     "username": user.username,
     "contactPhone": user.contactPhone,
-    "permissions": permissions,
+    "permissionGroups": permissionGroups,
     "bookings": bookings,
   }

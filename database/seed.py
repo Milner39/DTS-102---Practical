@@ -1,7 +1,7 @@
 import peewee as _PW
 
 from .client import DBClient
-from .schema import PermissionLevels, TicketHolderTypes
+from .schema import PermissionGroup_ENUM, TicketHolderType_ENUM
 
 dbClient = DBClient()
 
@@ -31,15 +31,15 @@ for filmTitle in FILM_TITLES:
     title=filmTitle
   )
 
-# Permission levels
-for level in PermissionLevels:
-  dbClient.tables.Permission.get_or_create(
-    id=level.value,
-    readable=level.name
+# Permission groups
+for group in PermissionGroup_ENUM:
+  dbClient.tables.PermissionGroup.get_or_create(
+    id=group.value,
+    readable=group.name
   )
 
 # Ticket holder types
-for type in TicketHolderTypes:
+for type in TicketHolderType_ENUM:
   dbClient.tables.TicketHolderType.get_or_create(
     id=type.value,
     readable=type.name
@@ -50,10 +50,10 @@ adminUser, _ = dbClient.tables.User.get_or_create(
   username=ADMIN_USER["username"],
   password=ADMIN_USER["password"]
 )
-adminPermission = dbClient.tables.Permission.get_by_id(PermissionLevels.ADMIN.value)
-dbClient.tables.UserPermissions.get_or_create(
+adminPermission = dbClient.tables.PermissionGroup.get_by_id(PermissionGroup_ENUM.ADMIN.value)
+dbClient.tables.UserPermissionGroups.get_or_create(
   user=adminUser,
-  permission=adminPermission
+  permissionGroup=adminPermission
 )
 
 # === ===
