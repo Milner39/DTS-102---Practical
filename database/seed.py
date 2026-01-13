@@ -1,4 +1,4 @@
-import peewee as _PW
+from . import queries as dbQueries
 
 from .client import dbClient
 from .schema import PermissionGroup_ENUM, TicketHolderType_ENUM
@@ -6,7 +6,7 @@ from .schema import PermissionGroup_ENUM, TicketHolderType_ENUM
 
 
 """
-This file populates the database with the data we need to let user's start 
+This file populates the database with the data we need to let users start 
 using the application.
 
 We also create an admin user here because only admins can create more admins.
@@ -49,7 +49,7 @@ for filmTitle in FILM_TITLES:
 
 # Permission groups
 for group in PermissionGroup_ENUM:
-  dbClient.tables.PermissionGroup.get_or_create(
+  dbQueries.permissionGroup.update_or_create(
     id=group.value,
     readable=group.name
   )

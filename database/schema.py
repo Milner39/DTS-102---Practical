@@ -274,7 +274,18 @@ class Ticket(BaseModel):
 
 
 #region Utils
-# === Define some utility subroutines to help use the schema
+# === Define some utility classes / subroutines to help use the schema
+
+class Tables:
+  User = User
+  UserPermissionGroups = UserPermissionGroups
+  PermissionGroup = PermissionGroup
+  Film = Film
+  Booking = Booking
+  Ticket = Ticket
+  TicketHolderType = TicketHolderType
+
+
 
 def initializeProxy(database: _PW.Database):
   """"
@@ -293,15 +304,6 @@ def createTables(database: _PW.Database):
   """
 
   initializeProxy(database)
-
-  class Tables:
-    User = User
-    UserPermissionGroups = UserPermissionGroups
-    PermissionGroup = PermissionGroup
-    Film = Film
-    Booking = Booking
-    Ticket = Ticket
-    TicketHolderType = TicketHolderType
 
   dbInstance = database
   dbInstance.create_tables([
