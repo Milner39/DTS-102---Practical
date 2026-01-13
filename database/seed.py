@@ -1,10 +1,21 @@
 import peewee as _PW
 
-from .client import DBClient
+from .client import dbClient
 from .schema import PermissionGroup_ENUM, TicketHolderType_ENUM
 
-dbClient = DBClient()
 
+
+"""
+This file populates the database with the data we need to let user's start 
+using the application.
+
+We also create an admin user here because only admins can create more admins.
+"""
+
+
+
+#region Data
+# === Define data that will be seeded into the database ===
 
 ADMIN_USER = {
   "username": "admin",
@@ -20,9 +31,14 @@ FILM_TITLES = [
   "The Shape of Time"
 ]
 
+# === ===
+#endregion
 
 
-# === Populate the database with data we know we'll need ===
+
+#region Seeding
+# === Populate the database with seed data ===
+
 # We use `Model.get_or_create()` so we don't get an error if the data already exists
 
 # Films from the Film Catalogue
@@ -57,3 +73,4 @@ dbClient.tables.UserPermissionGroups.get_or_create(
 )
 
 # === ===
+#endregion
