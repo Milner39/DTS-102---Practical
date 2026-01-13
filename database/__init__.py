@@ -39,8 +39,8 @@ def user__dataByAuth(username: str, password: str):
   user = res[0]
 
   permissionGroups = [
-    up.permissionGroup.readable
-    for up in user.permissionGroups
+    upg.permissionGroup.readable
+    for upg in user.permissionGroups
   ]
   bookings = [
     { "film": b.film_id, "datetime": b.datetime }
