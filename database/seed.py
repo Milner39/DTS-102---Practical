@@ -1,4 +1,4 @@
-from . import queries as dbQueries
+from .queries import Queries as dbQueries
 
 from .client import dbClient
 from .schema import PermissionGroup_ENUM, TicketHolderType_ENUM
@@ -39,7 +39,6 @@ FILM_TITLES = [
 #region Seeding
 # === Populate the database with seed data ===
 
-# We use `Model.get_or_create()` so we don't get an error if the data already exists
 
 # Films from the Film Catalogue
 for filmTitle in FILM_TITLES:
@@ -49,27 +48,22 @@ for filmTitle in FILM_TITLES:
 
 # Permission groups
 for group in PermissionGroup_ENUM:
-  dbQueries.permissionGroup.update_or_create(
+  dbQueries.Tables.PermissionGroup.update_or_create(
     id=group.value,
     readable=group.name
   )
 
 # Ticket holder types
 for type in TicketHolderType_ENUM:
-  dbClient.tables.TicketHolderType.get_or_create(
+  dbQueries.Tables.TicketHolderType.update_or_create(
     id=type.value,
     readable=type.name
   )
 
 # Admin User
-adminUser, _ = dbClient.tables.User.get_or_create(
+dbQueries.Tables.User.delete_then_create_admin(
   username=ADMIN_USER["username"],
   password=ADMIN_USER["password"]
-)
-adminPermission = dbClient.tables.PermissionGroup.get_by_id(PermissionGroup_ENUM.ADMIN.value)
-dbClient.tables.UserPermissionGroups.get_or_create(
-  user=adminUser,
-  permissionGroup=adminPermission
 )
 
 # === ===
