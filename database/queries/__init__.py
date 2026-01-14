@@ -3,7 +3,7 @@ import peewee as _PW
 from ..client import dbClient
 TableSchemas = dbClient.tables
 
-from ..schema import PermissionGroup_ENUM
+from ..schema import BaseModel, PermissionGroup_ENUM
 
 
 
@@ -22,7 +22,7 @@ class Queries:
     class _BaseQueries:
       """Common queries shared to all tables"""
 
-      table = _PW.Model()
+      table = BaseModel
       """
       Provides a reference to a Model that will be overridden depending on the 
       table query class that extends this one.
@@ -180,7 +180,7 @@ class Queries:
 
 
       @staticmethod
-      @dbClient.database.atomic
+      @dbClient.database.atomic()
       def delete_then_create_admin(username: str, password: str) -> TableSchemas.User:
         """
         Creates a User entry and gives them the `ADMIN` PermissionGroup
