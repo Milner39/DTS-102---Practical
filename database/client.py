@@ -1,4 +1,4 @@
-import os
+import os as _OS
 import peewee as _PW
 
 from .schema import createTables
@@ -13,19 +13,21 @@ We also create an admin user here because only admins can create more admins.
 
 
 
-def createDatabase():
-  """Create/Get the database"""
-
-  dbPath = os.path.join(os.path.dirname(__file__), "./data.db")
-  return _PW.SqliteDatabase(dbPath, pragmas={ "foreign_keys": 1 })
-
-
-
 class DBClient:
   """Class for interacting with the database"""
 
+  @staticmethod
+  def createDatabase():
+    """Create/Get the database"""
+
+    dbPath = _OS.path.join(_OS.path.dirname(__file__), "./data.db")
+    return _PW.SqliteDatabase(dbPath, pragmas={ "foreign_keys": 1 })
+
+
   def __init__(self):
-    self.database = createDatabase()
+    """Initialise a client for the database"""
+
+    self.database = __class__.createDatabase()
     self.database.connect()
 
     self.tables = createTables(self.database)
@@ -33,4 +35,4 @@ class DBClient:
 
 
 dbClient = DBClient()
-"""The database client we use to interact with the database"""
+"""The instance of the database client we use to interact with the database"""
