@@ -11,6 +11,7 @@ This file defines the database queries we use in the rest of the codebase
 
 
 
+# Get concise references to common classes
 Models  =  Schema.Models
 ENUMs   =  Schema.ENUMs
 
