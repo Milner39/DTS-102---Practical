@@ -1,7 +1,6 @@
-from .queries import Queries as dbQueries
-
 from .client import dbClient
-from .schema import PermissionGroup_ENUM, TicketHolderType_ENUM
+from .queries import Queries as dbQueries
+from .schema.enums import ENUMs as _ENUMs
 
 
 
@@ -48,14 +47,14 @@ for filmTitle in FILM_TITLES:
   )
 
 # Permission groups
-for group in PermissionGroup_ENUM:
+for group in _ENUMs.PermissionGroup_ENUM:
   dbQueries.Tables.PermissionGroup.update_or_create(
     id=group.value,
     readable=group.name
   )
 
 # Ticket holder types
-for type in TicketHolderType_ENUM:
+for type in _ENUMs.TicketHolderType_ENUM:
   dbQueries.Tables.TicketHolderType.update_or_create(
     id=type.value,
     readable=type.name

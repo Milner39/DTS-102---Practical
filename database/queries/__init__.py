@@ -1,9 +1,7 @@
 import peewee as _PW
 
 from ..client import dbClient
-TableSchemas = dbClient.tables
-
-from ..schema import BaseModel, PermissionGroup_ENUM
+from ..schema import Schema
 
 
 
@@ -12,6 +10,13 @@ This file defines the database queries we use in the rest of the codebase
 """
 
 
+
+Models  =  Schema.Models
+ENUMs   =  Schema.ENUMs
+
+
+
+#region Queries
 
 class Queries:
   """A class containing all of the custom database queries"""
@@ -22,7 +27,7 @@ class Queries:
     class _BaseQueries:
       """Common queries shared to all tables"""
 
-      table = BaseModel
+      table = Models._BaseModel
       """
       Provides a reference to a Model that will be overridden depending on the 
       table query class that extends this one.
@@ -60,7 +65,7 @@ class Queries:
 
       @staticmethod
       @dbClient.database.atomic()
-      def update_or_create(id: int, readable: str) -> TableSchemas.PermissionGroup:
+      def update_or_create(id: int, readable: str) -> Models.PermissionGroup:
         """
         Attempts to find an entry by it's id:
           - if not found -> create the entry
@@ -99,7 +104,7 @@ class Queries:
 
       @staticmethod
       @dbClient.database.atomic()
-      def update_or_create(id: int, readable: str) -> TableSchemas.TicketHolderType:
+      def update_or_create(id: int, readable: str) -> Models.TicketHolderType:
         """
         Attempts to find an entry by it's id:
           - if not found -> create the entry
@@ -156,7 +161,7 @@ class Queries:
 
       @staticmethod
       @dbClient.database.atomic()
-      def delete_then_create(username: str, password: str) -> TableSchemas.User:
+      def delete_then_create(username: str, password: str) -> Models.User:
         """
         Attempts to find an entry by it's username:
           - if found -> delete the entry
@@ -181,7 +186,7 @@ class Queries:
 
       @staticmethod
       @dbClient.database.atomic()
-      def delete_then_create_admin(username: str, password: str) -> TableSchemas.User:
+      def delete_then_create_admin(username: str, password: str) -> Models.User:
         """
         Creates a User entry and gives them the `ADMIN` PermissionGroup
         """
@@ -194,7 +199,7 @@ class Queries:
 
         # Get the admin permission group
         adminPG = dbClient.tables.PermissionGroup.get_by_id(
-          pk=PermissionGroup_ENUM.ADMIN.value
+          pk=ENUMs.PermissionGroup_ENUM.ADMIN.value
         )
 
         # Give the admin user the admin permission group
@@ -207,3 +212,5 @@ class Queries:
 
     # === ===
     #endregion User
+
+#endregion

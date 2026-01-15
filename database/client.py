@@ -1,7 +1,7 @@
 import os as _OS
 import peewee as _PW
 
-from .schema import createTables
+from .schema.utils import Utils as _SchemaUtils
 
 
 
@@ -30,7 +30,7 @@ class DBClient:
     self.database = __class__.createDatabase()
     self.database.connect()
 
-    self.tables = createTables(self.database)
+    self.tables = _SchemaUtils.createTables(self.database)
 
 
 
