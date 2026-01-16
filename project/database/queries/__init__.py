@@ -54,7 +54,7 @@ class Queries:
       table = dbClient.Tables.Film
 
     # === ===
-    #endregion PFilm
+    #endregion
 
 
     #region Permission Group
@@ -93,7 +93,7 @@ class Queries:
         return entry
 
     # === ===
-    #endregion Permission Group
+    #endregion
 
 
     #region Ticket Holder Type
@@ -132,7 +132,7 @@ class Queries:
         return entry
 
     # === ===
-    #endregion Ticket Holder Type
+    #endregion
 
 
     #region User
@@ -238,6 +238,6 @@ class Queries:
         return adminUser
 
     # === ===
-    #endregion User
+    #endregion
 
 #endregion
