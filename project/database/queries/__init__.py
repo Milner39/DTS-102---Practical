@@ -137,7 +137,7 @@ class PermissionGroup(_BaseQueries):
 
     try:
       entry = __class__.get_by_id(id)
-      if entry is None: raise
+      if entry is None: raise _PW.DoesNotExist
 
       __class__.table.update(
         id=id,
@@ -162,6 +162,32 @@ class Ticket(_BaseQueries):
 
   table = dbClient.Tables.Ticket
 
+
+  @staticmethod
+  @dbClient.database.atomic()
+  def create(bookingId: str, type: str) -> Models.Ticket | None:
+    """
+    Create a new ticket
+
+    Return the entry
+    """
+
+    booking: Models.Booking | None = Booking.get_by_id(bookingId)
+    ticketType: Models.TicketHolderType | None = TicketHolderType.get_by_readable(type)
+
+    if (
+      booking is None or
+      ticketType is None
+    ): return None
+
+    ticket = __class__.table.create(
+      booking=booking,
+      holderType=ticketType,
+      paidPrice=5.00
+    )
+
+    return ticket
+
 #endregion
 
 
@@ -171,6 +197,22 @@ class TicketHolderType(_BaseQueries):
   """Queries for the `TicketHolderType` table"""
 
   table = dbClient.Tables.TicketHolderType
+
+  @staticmethod
+  def get_by_readable(readable: str):
+    """
+    Attempts to find an entry by it's id
+      - if found -> return the entry
+      - else -> return `None`
+    """
+
+    try:
+      return __class__.table.get(
+        (__class__.table.readable == readable)
+      )
+    except _PW.DoesNotExist:
+      return None
+
 
   @staticmethod
   @dbClient.database.atomic()
@@ -185,7 +227,7 @@ class TicketHolderType(_BaseQueries):
 
     try:
       entry = __class__.table.get_by_id(id)
-      if entry is None: raise
+      if entry is None: raise _PW.DoesNotExist
 
       __class__.table.update(
         id=id,

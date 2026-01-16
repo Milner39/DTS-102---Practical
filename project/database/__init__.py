@@ -119,6 +119,9 @@ class Database:
     booking = _dbQueries.Tables.Booking.create(userId, str(film.title), datetime)
     if booking is None: return None
 
+    for ticket in tickets:
+      _dbQueries.Tables.Ticket.create(str(booking.id), ticket)
+
   #endregion
 
 
