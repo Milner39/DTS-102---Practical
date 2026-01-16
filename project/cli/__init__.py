@@ -103,7 +103,7 @@ def main():
 
     datetime: _DT | None = None
     while datetime is None:
-      # TODO: account for current datetime
+      # TODO: account for current datetime (prevent bookings after today)
       try:
         dateStr = input("Enter booing date and time (DD/MM/YYYY HH:MM): ")
         datetime = _DT.strptime(dateStr, "%d/%m/%Y %H:%M")
