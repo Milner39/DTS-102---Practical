@@ -2,6 +2,7 @@
 - Have UV installed
 
 # How To Use
+- You may need to run `pip install -e .` if not using UV.
 - Run `./database/seed.py` with `uv run -m project.database.seed`.
 - Run `./main.py` with `uv run -m project`.
 - Install the "qwtel.sqlite-viewer" vscode extension to see how data is stored 
