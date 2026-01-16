@@ -1,4 +1,5 @@
 import peewee as _PW
+from datetime import datetime as _DT
 
 from .client import dbClient as _dbClient
 from .queries import Queries as _dbQueries
@@ -103,15 +104,20 @@ class Database:
   #endregion
 
 
-  #region Film
+  #region Booking
 
   @staticmethod
-  def booking__create(userId, bDatetime, filmTitle, tickets):
+  @_dbClient.database.atomic()
+  def booking__create(userId: str, datetime: _DT, filmTitle: str, tickets):
     """
     Create a booking and tickets.
     """
 
-    return [ film.title for film in _dbClient.Tables.Film.select() ]
+    film = _dbQueries.Tables.Film.get_by_title(filmTitle)
+    if film is None: return None
+
+    booking = _dbQueries.Tables.Booking.create(userId, str(film.title), datetime)
+    if booking is None: return None
 
   #endregion
 

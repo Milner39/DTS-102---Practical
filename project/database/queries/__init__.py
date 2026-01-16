@@ -1,4 +1,5 @@
 import peewee as _PW
+from datetime import datetime as _DT
 
 from ..client import dbClient
 from ..schema import Schema
@@ -30,14 +31,14 @@ class _BaseQueries:
   table query class that extends this one.
   """
 
-  @staticmethod
-  def delete_all() -> None:
+  @classmethod
+  def delete_all(cls) -> None:
     """Delete every entry in this table"""
 
-    __class__.table.delete().execute()
+    cls.table.delete().execute()
 
-  @staticmethod
-  def get_by_id(id):
+  @classmethod
+  def get_by_id(cls, id):
     """
     Attempts to find an entry by it's id
       - if found -> return the entry
@@ -45,7 +46,7 @@ class _BaseQueries:
     """
 
     try:
-      return __class__.table.get_by_id(id)
+      return cls.table.get_by_id(id)
     except _PW.DoesNotExist:
       return None
 
@@ -65,7 +66,7 @@ class Booking(_BaseQueries):
 
   @staticmethod
   @dbClient.database.atomic()
-  def create(userId, filmId, datetime):
+  def create(userId: str, filmId: str, datetime: _DT) -> Models.Booking | None:
     """
     Create a new booking
 
@@ -82,7 +83,8 @@ class Booking(_BaseQueries):
 
     booking = __class__.table.create(
       user=user,
-      film=film
+      film=film,
+      datetime=datetime
     )
 
     return booking

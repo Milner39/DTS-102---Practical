@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime as _DT
 
 from .utils import Utils as _Utils
 from .types import Types as _Types
@@ -101,12 +101,12 @@ def main():
       return (filmTitle, tickets)
 
 
-    bookingDate = None
-    while bookingDate is None:
+    datetime: _DT | None = None
+    while datetime is None:
       # TODO: account for current datetime
       try:
         dateStr = input("Enter booing date and time (DD/MM/YYYY HH:MM): ")
-        bookingDate = datetime.strptime(dateStr, "%d/%m/%Y %H:%M")
+        datetime = _DT.strptime(dateStr, "%d/%m/%Y %H:%M")
       except ValueError:
         print("Invalid datetime, try again")
     print()
@@ -119,7 +119,7 @@ def main():
     filmTitle, tickets = _Utils.optionSelect(filmOptions)
     if len(tickets) == 0: return
 
-    
+    _Database.booking__create(user["id"], datetime, filmTitle, tickets)
 
 
   #endregion
