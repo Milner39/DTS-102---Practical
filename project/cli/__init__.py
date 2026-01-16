@@ -92,11 +92,20 @@ def main():
 
     else:
       options.update({
-        "Switch User": login
+        "Switch User": login,
+      })
+
+      if ("ADMIN" in user["permissionGroups"]):
+        options.update({
+          "View all bookings": lambda : ""
+        })
+
+      options.update({
+        "View your bookings": lambda : "",
+        "Create a booking": lambda : ""
       })
 
 
-    print(user)
     _Utils.optionSelect(options)
 
   #endregion
