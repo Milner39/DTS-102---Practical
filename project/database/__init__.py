@@ -1,6 +1,7 @@
 import peewee as _PW
 
 from .client import dbClient as _dbClient
+from .queries import Queries as _dbQueries
 
 
 
@@ -82,11 +83,19 @@ class Database:
     """
 
     userId = __class__.user__idByAuth(username, password)
-    if userId == None: return None
+    if userId is None: return None
 
     return __class__.user__dataById(userId)
 
 
   @staticmethod
   def user__register(username: str, password: str):
-    pass
+    """
+    Register a new user
+    """
+
+    user = _dbQueries.Tables.User.create(username, password)
+    if user is None: return None
+
+    assert user.id is str
+    return __class__.user__dataById(user.id)

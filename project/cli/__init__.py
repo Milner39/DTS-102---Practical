@@ -50,6 +50,28 @@ def main():
 
       print()
 
+
+
+  def register():
+
+    global user
+
+    user = None
+
+    while user is None:
+      username = input("Username: ")
+      password = input("Password: ")
+
+      user = _Database.user__register(username, password)
+
+      if (user is None):
+        print("Username is taken, try again")
+
+      else:
+        print(f"Logged in as \"{user["username"]}\"")
+
+      print()
+
   #endregion
 
 
@@ -65,7 +87,7 @@ def main():
     if user is None:
       options.update({
         "Login": login,
-        "Register": lambda : ""
+        "Register": register
       })
 
     else:

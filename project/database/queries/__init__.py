@@ -174,7 +174,7 @@ class Queries:
 
         userId = __class__.id_by_username(username=username)
 
-        if (userId is not None):
+        if (userId is not None):  # username taken
           return None
 
         user = __class__.table.create(
