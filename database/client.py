@@ -6,7 +6,7 @@ from .schema.utils import Utils as _SchemaUtils
 
 
 """
-This file provides utilities for creating the database and database client.
+This script provides utilities for creating the database and database client.
 
 We also create an admin user here because only admins can create more admins.
 """

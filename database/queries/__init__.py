@@ -6,7 +6,7 @@ from ..schema import Schema
 
 
 """
-This file defines the database queries we use in the rest of the codebase
+This script defines the database queries we use in the rest of the codebase
 """
 
 

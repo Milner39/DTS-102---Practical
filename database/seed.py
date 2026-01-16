@@ -5,7 +5,7 @@ from .schema.enums import ENUMs as _ENUMs
 
 
 """
-This file populates the database with the data we need to let users start 
+This script populates the database with the data we need to let users start 
 using the application.
 
 We also create a "root" admin user here because only admins can create more 
