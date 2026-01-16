@@ -20,6 +20,8 @@ class Database:
   module.
   """
 
+  #region User
+
   @staticmethod
   def user__dataById(id: str):
     """
@@ -50,6 +52,7 @@ class Database:
     ]
 
     return {
+      "id": user.id,
       "username": user.username,
       "contactPhone": user.contactPhone,
       "permissionGroups": permissionGroups,
@@ -99,3 +102,18 @@ class Database:
 
     assert user.id is str
     return __class__.user__dataById(user.id)
+
+  #endregion
+
+
+  #region Film
+
+  @staticmethod
+  def film__allTitles():
+    """
+    Get every film title
+    """
+
+    return [ film.title for film in _dbClient.Tables.Film.select() ]
+
+  #endregion

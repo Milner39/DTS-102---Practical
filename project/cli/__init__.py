@@ -32,9 +32,7 @@ def main():
 
   def login():
 
-    global user
-
-    user = None
+    global user; user = None
 
     while user is None:
       username = input("Username: ")
@@ -54,9 +52,7 @@ def main():
 
   def register():
 
-    global user
-
-    user = None
+    global user; user = None
 
     while user is None:
       username = input("Username: ")
@@ -71,6 +67,25 @@ def main():
         print(f"Logged in as \"{user["username"]}\"")
 
       print()
+
+
+
+  def createBooking():
+
+    def create(filmTitle: str):
+
+      global user
+
+      print(f"Selected: {filmTitle}")
+
+
+    filmOptions = {}
+    for title in _Database.film__allTitles():
+      print(f"Adding title: {title}")
+
+      filmOptions[title] = lambda t=title: create(t)
+
+    _Utils.optionSelect(filmOptions)
 
   #endregion
 
@@ -102,7 +117,7 @@ def main():
 
       options.update({
         "View your bookings": lambda : "",
-        "Create a booking": lambda : ""
+        "Create a booking": createBooking
       })
 
 
