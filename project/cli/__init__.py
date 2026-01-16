@@ -117,6 +117,10 @@ def main():
 
     print("Select a film")
     filmTitle, tickets = _Utils.optionSelect(filmOptions)
+    if len(tickets) == 0: return
+
+    
+
 
   #endregion
 

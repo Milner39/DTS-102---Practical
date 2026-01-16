@@ -97,6 +97,21 @@ class Film(_BaseQueries):
 
   table = dbClient.Tables.Film
 
+  @staticmethod
+  def get_by_title(title: str) -> Models.Film | None:
+    """
+    Attempts to find an entry by it's title
+      - if found -> return the entry
+      - else -> return `None`
+    """
+
+    try:
+      return dbClient.Tables.Film.get(
+        (__class__.table.title == title)
+      )
+    except _PW.DoesNotExist:
+      return None
+
 #endregion
 
 

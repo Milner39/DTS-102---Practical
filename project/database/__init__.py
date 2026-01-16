@@ -25,7 +25,7 @@ class Database:
   @staticmethod
   def user__dataById(id: str):
     """
-    Get the user's data given the entry's id
+    Get the user's data given the entry's id.
     """
 
     Tables = _dbClient.Tables
@@ -59,12 +59,11 @@ class Database:
       "bookings": bookings,
     }
 
-
   @staticmethod
   def user__idByAuth(username: str, password: str):
     """
-    Return the user id of the entry in the User table that has the given 
-    username and password.
+    Return the id of the entry in the User table with the given username and 
+    password.
     """
 
     User = _dbClient.Tables.User
@@ -78,11 +77,10 @@ class Database:
     except _PW.DoesNotExist:
       return None
 
-
   @staticmethod
   def user__dataByAuth(username: str, password: str):
     """
-    Get the user's data given their username and password
+    Get the user's data given their username and password.
     """
 
     userId = __class__.user__idByAuth(username, password)
@@ -90,11 +88,10 @@ class Database:
 
     return __class__.user__dataById(userId)
 
-
   @staticmethod
   def user__register(username: str, password: str):
     """
-    Register a new user
+    Register a new user.
     """
 
     user = _dbQueries.Tables.User.create(username, password)
@@ -109,12 +106,38 @@ class Database:
   #region Film
 
   @staticmethod
-  def film__allTitles():
+  def booking__create(userId, bDatetime, filmTitle, tickets):
     """
-    Get every film title
+    Create a booking and tickets.
     """
 
     return [ film.title for film in _dbClient.Tables.Film.select() ]
+
+  #endregion
+
+
+  #region Film
+
+  @staticmethod
+  def film__allTitles():
+    """
+    Get every film title.
+    """
+
+    return [ film.title for film in _dbClient.Tables.Film.select() ]
+  
+  @staticmethod
+  def film__idByTitle(title: str):
+    """
+    Return the id of the entry in the Film table with the given title.
+    """
+
+    film = _dbQueries.Tables.Film.get_by_title(title)
+    if film is None: return None
+
+    return film.title
+    # The id of a film is the title but it shouldn't really be, so this is for
+    # future fixes
 
   #endregion
 
@@ -124,7 +147,7 @@ class Database:
   @staticmethod
   def ticketHolderType__allTypes():
     """
-    Get every ticket holder type
+    Get every ticket holder type.
     """
 
     return [ tType.readable for tType in _dbClient.Tables.TicketHolderType.select() ]
