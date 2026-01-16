@@ -162,6 +162,31 @@ class Queries:
 
       @staticmethod
       @dbClient.database.atomic()
+      def create(username: str, password: str) -> Models.User | None:
+        """
+        Attempts to find an entry by it's username:
+          - if found -> return `None`
+
+        Create the entry
+
+        Return the entry
+        """
+
+        userId = __class__.id_by_username(username=username)
+
+        if (userId is not None):
+          return None
+
+        user = __class__.table.create(
+          username=username,
+          password=password
+        )
+
+        return user
+
+
+      @staticmethod
+      @dbClient.database.atomic()
       def delete_then_create(username: str, password: str) -> Models.User:
         """
         Attempts to find an entry by it's username:
@@ -169,7 +194,7 @@ class Queries:
 
         Create the entry
 
-        Returns the entry
+        Return the entry
         """
 
         userId = __class__.id_by_username(username=username)
@@ -177,10 +202,11 @@ class Queries:
         if (userId is not None):
           __class__.table.delete_by_id(userId)
 
-        user = __class__.table.create(
+        user = __class__.create(
           username=username,
           password=password
         )
+        assert user is not None
 
         return user
 
