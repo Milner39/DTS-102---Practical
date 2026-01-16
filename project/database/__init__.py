@@ -117,3 +117,16 @@ class Database:
     return [ film.title for film in _dbClient.Tables.Film.select() ]
 
   #endregion
+
+
+  #region TicketHolderType
+
+  @staticmethod
+  def ticketHolderType__allTypes():
+    """
+    Get every ticket holder type
+    """
+
+    return [ tType.readable for tType in _dbClient.Tables.TicketHolderType.select() ]
+
+  #endregion

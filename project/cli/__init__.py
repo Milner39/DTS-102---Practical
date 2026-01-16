@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from .utils import Utils as _Utils
 from .types import Types as _Types
 
@@ -12,6 +14,7 @@ This script defines the entry point to the command line interface.
 
 
 def main():
+  """Entry point to the cli"""
 
   #region Globals
 
@@ -26,11 +29,13 @@ def main():
   #region Subroutines
 
   def exit():
+    """Stop the cli"""
     global running; running = False
 
 
 
   def login():
+    """User logs in with username and password"""
 
     global user; user = None
 
@@ -51,6 +56,7 @@ def main():
 
 
   def register():
+    """User logs in with new username and password"""
 
     global user; user = None
 
@@ -71,21 +77,46 @@ def main():
 
 
   def createBooking():
+    """Create a new booking"""
 
-    def create(filmTitle: str):
+    global user
+    if user is None: raise
 
-      global user
 
-      print(f"Selected: {filmTitle}")
+    def createTickets(filmTitle: str):
+      tickets = []
 
+      ticketOptions = {
+        "Finish": lambda: None
+      }
+      
+      for ticketType in _Database.ticketHolderType__allTypes():
+        ticketOptions[ticketType] = lambda t=ticketType: t
+
+      while True:
+        tType = _Utils.optionSelect(ticketOptions)
+        if tType is None: break
+        else: tickets.append(tType)
+
+      return (filmTitle, tickets)
+
+
+    bookingDate = None
+    while bookingDate is None:
+      # TODO: account for current datetime
+      try:
+        dateStr = input("Enter booing date and time (DD/MM/YYYY HH:MM): ")
+        bookingDate = datetime.strptime(dateStr, "%d/%m/%Y %H:%M")
+      except ValueError:
+        print("Invalid datetime, try again")
+    print()
 
     filmOptions = {}
     for title in _Database.film__allTitles():
-      print(f"Adding title: {title}")
+      filmOptions[title] = lambda t=title: createTickets(t)
 
-      filmOptions[title] = lambda t=title: create(t)
-
-    _Utils.optionSelect(filmOptions)
+    print("Select a film")
+    filmTitle, tickets = _Utils.optionSelect(filmOptions)
 
   #endregion
 
