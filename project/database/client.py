@@ -30,7 +30,7 @@ class DBClient:
     self.database = __class__.createDatabase()
     self.database.connect()
 
-    self.tables = _SchemaUtils.createTables(self.database)
+    self.Tables = _SchemaUtils.createTables(self.database)
 
 
 

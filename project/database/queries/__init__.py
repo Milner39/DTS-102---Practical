@@ -51,7 +51,7 @@ class Queries:
     class Film(_BaseQueries):
       """Queries for the `Film` table"""
 
-      table = dbClient.tables.Film
+      table = dbClient.Tables.Film
 
     # === ===
     #endregion PFilm
@@ -62,7 +62,7 @@ class Queries:
     class PermissionGroup(_BaseQueries):
       """Queries for the `PermissionGroup` table"""
 
-      table = dbClient.tables.PermissionGroup
+      table = dbClient.Tables.PermissionGroup
 
       @staticmethod
       @dbClient.database.atomic()
@@ -101,7 +101,7 @@ class Queries:
     class TicketHolderType(_BaseQueries):
       """Queries for the `TicketHolderType` table"""
 
-      table = dbClient.tables.TicketHolderType
+      table = dbClient.Tables.TicketHolderType
 
       @staticmethod
       @dbClient.database.atomic()
@@ -140,7 +140,7 @@ class Queries:
     class User(_BaseQueries):
       """Queries for the `User` table"""
 
-      table = dbClient.tables.User
+      table = dbClient.Tables.User
 
       @staticmethod
       def id_by_username(username: str) -> (int | None):
@@ -225,12 +225,12 @@ class Queries:
         )
 
         # Get the admin permission group
-        adminPG = dbClient.tables.PermissionGroup.get_by_id(
+        adminPG = dbClient.Tables.PermissionGroup.get_by_id(
           pk=ENUMs.PermissionGroup_ENUM.ADMIN.value
         )
 
         # Give the admin user the admin permission group
-        dbClient.tables.UserPermissionGroups.create(
+        dbClient.Tables.UserPermissionGroups.create(
           user=adminUser,
           permissionGroup=adminPG
         )

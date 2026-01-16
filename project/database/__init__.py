@@ -20,37 +20,20 @@ class Database:
   """
 
   @staticmethod
-  def user__idByAuth(username: str, password: str):
+  def user__dataById(id: str):
     """
-    Return the user id of the entry in the User table that has the given 
-    username and password.
+    Get the user's data given the entry's id
     """
 
-    User = _dbClient.tables.User
-
-    try:
-      user = User.get(
-        (User.username == username) &
-        (User.password == password)
-      )
-      return user.id
-    except _PW.DoesNotExist:
-      return None
-
-
-  @staticmethod
-  def user__dataByAuth(username: str, password: str):
-    User = _dbClient.tables.User
-    UserPermissionGroups = _dbClient.tables.UserPermissionGroups
-    PermissionGroup = _dbClient.tables.PermissionGroup
-    Booking = _dbClient.tables.Booking
-
-    userId = __class__.user__idByAuth(username, password)
-    if userId == None: return None
+    Tables = _dbClient.Tables
+    User = Tables.User
+    UserPermissionGroups = Tables.UserPermissionGroups
+    PermissionGroup = Tables.PermissionGroup
+    Booking = Tables.Booking
 
     res = (User
       .select(User.id, User.username, User.contactPhone)
-      .where(User.id == userId)
+      .where(User.id == id)
       .prefetch(UserPermissionGroups, PermissionGroup, Booking)
     )
     if len(res) != 1: raise Exception()
@@ -71,3 +54,39 @@ class Database:
       "permissionGroups": permissionGroups,
       "bookings": bookings,
     }
+
+
+  @staticmethod
+  def user__idByAuth(username: str, password: str):
+    """
+    Return the user id of the entry in the User table that has the given 
+    username and password.
+    """
+
+    User = _dbClient.Tables.User
+
+    try:
+      user = User.get(
+        (User.username == username) &
+        (User.password == password)
+      )
+      return user.id
+    except _PW.DoesNotExist:
+      return None
+
+
+  @staticmethod
+  def user__dataByAuth(username: str, password: str):
+    """
+    Get the user's data given their username and password
+    """
+
+    userId = __class__.user__idByAuth(username, password)
+    if userId == None: return None
+
+    return __class__.user__dataById(userId)
+
+
+  @staticmethod
+  def user__register(username: str, password: str):
+    pass
