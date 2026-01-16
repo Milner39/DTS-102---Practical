@@ -183,7 +183,7 @@ class Ticket(_BaseQueries):
     ticket = __class__.table.create(
       booking=booking,
       holderType=ticketType,
-      paidPrice=5.00
+      paidPriceGBP=5.00
     )
 
     return ticket
