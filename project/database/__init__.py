@@ -121,6 +121,44 @@ class Database:
     for ticket in tickets:
       _dbQueries.Tables.Ticket.create(str(booking.id), ticket)
 
+  @staticmethod
+  @_dbClient.database.atomic()
+  def booking__getAll():
+    """
+    Get every booking and it's tickets
+    """
+
+    Tables = _dbClient.Tables
+    Booking = Tables.Booking
+    User = Tables.User
+    Ticket = Tables.Ticket
+    TicketHolderType = Tables.TicketHolderType
+
+    res = (Booking
+      .select(Booking.datetime)
+      .prefetch(User, Ticket, TicketHolderType)
+    )
+
+    bookings = [
+      {
+        "film": booking.film.title,
+        "datetime": booking.datetime,
+        "tickets": [
+          {
+            "holder": ticket.holderName,
+            "type": ticket.holderType.readable.title(),
+            "paid price": f"£{ticket.paidPriceGBP}",
+          }
+
+          for ticket in booking.tickets
+        ]
+      }
+
+      for booking in res
+    ]
+
+    return bookings
+
   #endregion
 
 

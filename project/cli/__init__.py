@@ -35,7 +35,7 @@ def main():
 
 
   def login():
-    """User logs in with username and password"""
+    """User logs in with username and password."""
 
     global user; user = None
 
@@ -56,7 +56,7 @@ def main():
 
 
   def register():
-    """User logs in with new username and password"""
+    """User logs in with new username and password."""
 
     global user; user = None
 
@@ -77,7 +77,7 @@ def main():
 
 
   def createBooking():
-    """Create a new booking"""
+    """Create a new booking."""
 
     global user
     if user is None: raise
@@ -122,6 +122,16 @@ def main():
     _Database.booking__create(user["id"], datetime, filmTitle, tickets)
 
 
+
+  def viewAllBookings():
+    """View all bookings."""
+
+    global user
+    if user is None: raise
+    if "ADMIN" not in user["permissionGroups"]: raise
+
+    print(_Database.booking__getAll())
+
   #endregion
 
 
@@ -147,7 +157,7 @@ def main():
 
       if ("ADMIN" in user["permissionGroups"]):
         options.update({
-          "View all bookings": lambda : ""
+          "View all bookings": viewAllBookings
         })
 
       options.update({
