@@ -98,8 +98,7 @@ class Database:
     user = _dbQueries.Tables.User.create(username, password)
     if user is None: return None
 
-    assert user.id is str
-    return __class__.user__dataById(user.id)
+    return __class__.user__dataById(str(user.id))
 
   #endregion
 

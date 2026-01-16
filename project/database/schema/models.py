@@ -212,7 +212,8 @@ class Ticket(BaseModel):
   """Entry in `Booking` table"""
 
   holderName = _PW.CharField(
-    max_length=64
+    max_length=64,
+    null=True
   )
   """Optional ticket holder name"""
 
