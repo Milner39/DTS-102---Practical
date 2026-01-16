@@ -91,7 +91,7 @@ def main():
       }
       
       for ticketType in _Database.ticketHolderType__allTypes():
-        ticketOptions[ticketType] = lambda t=ticketType: t
+        ticketOptions[ticketType.title()] = lambda t=ticketType: t
 
       while True:
         tType = _Utils.optionSelect(ticketOptions)
