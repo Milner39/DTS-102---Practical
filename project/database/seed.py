@@ -42,7 +42,7 @@ FILM_TITLES = [
 
 # Films from the Film Catalogue
 for filmTitle in FILM_TITLES:
-  dbClient.tables.Film.get_or_create(
+  dbClient.Tables.Film.get_or_create(
     title=filmTitle
   )
 
