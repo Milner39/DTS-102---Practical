@@ -149,7 +149,7 @@ class Database:
           {
             "holderName": ticket.holderName,
             "type": ticket.holderType.readable.title(),
-            "paid price": f"£{ticket.paidPriceGBP}",
+            "paidPrice": f"£{ticket.paidPriceGBP}",
           }
 
           for ticket in booking.tickets
