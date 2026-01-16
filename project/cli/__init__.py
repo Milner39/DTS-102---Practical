@@ -131,6 +131,7 @@ def main():
     if "ADMIN" not in user["permissionGroups"]: raise
 
     print(_Database.booking__getAll())
+    print()
 
   #endregion
 
