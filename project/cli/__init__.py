@@ -1,6 +1,7 @@
 from datetime import datetime as _DT
 
 from .utils import Utils as _Utils
+from .format import Format as _Format
 from .types import Types as _Types
 
 from project.database import Database as _Database
@@ -130,7 +131,7 @@ def main():
     if user is None: raise
     if "ADMIN" not in user["permissionGroups"]: raise
 
-    print(_Database.booking__getAll())
+    _Format.bookingsTable(_Database.booking__getAll())
     print()
 
   #endregion
