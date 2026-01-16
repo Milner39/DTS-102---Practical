@@ -6,7 +6,7 @@
 - Run `./database/seed.py` with `uv run -m project.database.seed`.
 - Run `./main.py` with `uv run -m project`.
 - Install the "qwtel.sqlite-viewer" vscode extension to see how data is stored 
-  in normalised tables.
+  in normalised tables in the `/project/database/data.db` file.
 
 # Features
 - Register user account
