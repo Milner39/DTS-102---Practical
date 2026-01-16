@@ -124,6 +124,21 @@ def main():
 
 
 
+  def viewUserBookings():
+    """View the user's booking bookings."""
+
+    global user
+    if user is None: raise
+
+    bookings = _Database.booking__getByUserId(user["id"])
+    if len(bookings) < 1:
+      print("You haven't make any bookings yet.")
+    else:
+      print(_Format.bookingsTable(bookings))
+    print()
+
+
+
   def viewAllBookings():
     """View all bookings."""
 
@@ -131,7 +146,11 @@ def main():
     if user is None: raise
     if "ADMIN" not in user["permissionGroups"]: raise
 
-    _Format.bookingsTable(_Database.booking__getAll())
+    bookings = _Database.booking__getAll()
+    if len(bookings) < 1:
+      print("There aren't any bookings yet.")
+    else:
+      print(_Format.bookingsTable(bookings))
     print()
 
   #endregion
@@ -163,7 +182,7 @@ def main():
         })
 
       options.update({
-        "View your bookings": lambda : "",
+        "View your bookings": viewUserBookings,
         "Create a booking": createBooking
       })
 

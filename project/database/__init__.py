@@ -15,6 +15,28 @@ by authentication or otherwise.
 
 
 
+# region Utils
+
+def transformBookingData(booking):
+  return {
+    "user": booking.user.username,
+    "film": booking.film.title,
+    "datetime": booking.datetime,
+    "tickets": [
+      {
+        "holderName": ticket.holderName,
+        "type": ticket.holderType.readable.title(),
+        "paidPrice": f"£{ticket.paidPriceGBP}",
+      }
+
+      for ticket in booking.tickets
+    ]
+  }
+
+# endregion
+
+
+
 class Database:
   """
   Class for interacting with the database from outside the `database` 
@@ -125,7 +147,7 @@ class Database:
   @_dbClient.database.atomic()
   def booking__getAll():
     """
-    Get every booking and it's tickets
+    Get every booking and it's data.
     """
 
     Tables = _dbClient.Tables
@@ -140,24 +162,31 @@ class Database:
       .prefetch(User, Film, Ticket, TicketHolderType)
     )
 
-    bookings = [
-      {
-        "user": booking.user.username,
-        "film": booking.film.title,
-        "datetime": booking.datetime,
-        "tickets": [
-          {
-            "holderName": ticket.holderName,
-            "type": ticket.holderType.readable.title(),
-            "paidPrice": f"£{ticket.paidPriceGBP}",
-          }
+    bookings = [ transformBookingData(booking) for booking in res ]
 
-          for ticket in booking.tickets
-        ]
-      }
+    return bookings
 
-      for booking in res
-    ]
+  @staticmethod
+  @_dbClient.database.atomic()
+  def booking__getByUserId(userId: str):
+    """
+    Get user's booking and it's data.
+    """
+
+    Tables = _dbClient.Tables
+    Booking = Tables.Booking
+    User = Tables.User
+    Film = Tables.Film
+    Ticket = Tables.Ticket
+    TicketHolderType = Tables.TicketHolderType
+
+    res = (Booking
+      .select(Booking)
+      .where(Booking.user == userId)
+      .prefetch(User, Film, Ticket, TicketHolderType)
+    )
+
+    bookings = [ transformBookingData(booking) for booking in res ]
 
     return bookings
 
