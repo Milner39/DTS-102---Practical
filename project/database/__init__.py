@@ -142,11 +142,12 @@ class Database:
 
     bookings = [
       {
+        "user": booking.user.username,
         "film": booking.film.title,
         "datetime": booking.datetime,
         "tickets": [
           {
-            "holder": ticket.holderName,
+            "holderName": ticket.holderName,
             "type": ticket.holderType.readable.title(),
             "paid price": f"£{ticket.paidPriceGBP}",
           }
