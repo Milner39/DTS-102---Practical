@@ -131,12 +131,13 @@ class Database:
     Tables = _dbClient.Tables
     Booking = Tables.Booking
     User = Tables.User
+    Film = Tables.Film
     Ticket = Tables.Ticket
     TicketHolderType = Tables.TicketHolderType
 
     res = (Booking
-      .select(Booking.datetime)
-      .prefetch(User, Ticket, TicketHolderType)
+      .select(Booking)
+      .prefetch(User, Film, Ticket, TicketHolderType)
     )
 
     bookings = [
