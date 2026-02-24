@@ -132,7 +132,7 @@ def main():
 
     bookings = _Database.booking__getByUserId(user["id"])
     if len(bookings) < 1:
-      print("You haven't make any bookings yet.")
+      print("You haven't made any bookings yet.")
     else:
       print(_Format.bookingsTable(bookings))
     print()
